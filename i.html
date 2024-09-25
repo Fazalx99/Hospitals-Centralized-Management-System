@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Treatment Plans and Symptom Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .form-group textarea {
+            resize: vertical;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #007BFF;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .result h3 {
+            margin-top: 0;
+            color: #007BFF;
+        }
+        .result p, .result ul {
+            color: #333;
+        }
+        .result ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Personalized Treatment Plans and Symptom Checker</h2>
+
+        <!-- Personalized Treatment Plan Form -->
+        <form id="treatmentForm">
+            <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" name="weight" required>
+            </div>
+            <div class="form-group">
+                <label for="height">Height (cm):</label>
+                <input type="number" id="height" name="height" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="bloodPressureUpper">Blood Pressure Upper (mmHg):</label>
+                <input type="number" id="bloodPressureUpper" name="bloodPressureUpper" required>
+            </div>
+            <div class="form-group">
+                <label for="bloodPressureLower">Blood Pressure Lower (mmHg):</label>
+                <input type="number" id="bloodPressureLower" name="bloodPressureLower" required>
+            </div>
+            <div class="form-group">
+                <label for="diabetes">Diabetes (Yes/No):</label>
+                <input type="text" id="diabetes" name="diabetes" required>
+            </div>
+        </form>
+
+        <!-- Symptom Checker Form -->
+        <form id="symptomForm">
+            <div class="form-group">
+                <label for="symptomInput1">Symptom 1:</label>
+                <input type="text" id="symptomInput1" name="symptom1">
+            </div>
+            <div class="form-group">
+                <label for="symptomInput2">Symptom 2:</label>
+                <input type="text" id="symptomInput2" name="symptom2">
+            </div>
+            <div class="form-group">
+                <label for="symptomInput3">Symptom 3:</label>
+                <input type="text" id="symptomInput3" name="symptom3">
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="checkSymptoms()">Check Symptoms</button>
+            </div>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function normalizeText(text) {
+            return text.toLowerCase().trim().replace(/[\s,]+/g, " ");
+        }
+
+        function checkSymptoms() {
+            const symptom1 = normalizeText(document.getElementById('symptomInput1').value);
+            const symptom2 = normalizeText(document.getElementById('symptomInput2').value);
+            const symptom3 = normalizeText(document.getElementById('symptomInput3').value);
+
+            const symptoms = [symptom1, symptom2, symptom3].filter(s => s);
+
+            if (symptoms.length < 2) {
+                document.getElementById('result').innerHTML = `
+                    <h3>Symptom Check Results</h3>
+                    <p>Please provide at least two symptoms to help identify potential conditions.</p>
+                `;
+                return;
+            }
+
+            // Blood pressure readings
+            const bloodPressureUpper = parseInt(document.getElementById('bloodPressureUpper').value.trim(), 10);
+            const bloodPressureLower = parseInt(document.getElementById('bloodPressureLower').value.trim(), 10);
+
+            let bloodPressureStatus = "Normal";
+
+            if (bloodPressureUpper > 120 || bloodPressureLower > 80) {
+                bloodPressureStatus = "High";
+            } else if (bloodPressureUpper < 90 || bloodPressureLower < 60) {
+                bloodPressureStatus = "Low";
+            }
+
+            let disease = "Unknown";
+            let medicine = "Consult a doctor";
+            let advice = "";
+
+            // Check for common cold first
+            if (symptoms.includes('fever') && symptoms.includes('cough')) {
+                disease = "Common Cold";
+                medicine = "Over-the-counter cold medicine";
+                advice = "Monitor symptoms. If symptoms persist for more than a week, consult a doctor.";
+            } 
+            // Check for ear infection only if fever and earache are present
+            else if (symptoms.includes('fever') || symptoms.includes('earache') || symptoms.includes('ear pain')) {
+                disease = "Ear Infection";
+                medicine = "Over-the-counter pain relievers and consult a doctor if needed.";
+                advice = "Monitor symptoms and seek medical advice if symptoms persist.";
+            }
+            // Check for stomach infection
+            else if (symptoms.includes('pain in stomach') || symptoms.includes('gas') ||
+                       symptoms.includes('vomiting') || symptoms.includes('diarrhea')) {
+                disease = "Possible Stomach Infection";
+                medicine = "Seek immediate medical attention.";
+                advice = "Contact emergency services immediately.";
+            } 
+            // Check for heart condition
+            else if (symptoms.some(s => ['chest pain', 'shortness of breath', 'pain in jaw', 'pain in neck', 
+                'pain in shoulders', 'pain in arms', 'pain in back', 'pain in upper belly', 'sweating', 
+                'lightheaded', 'dizziness', 'nausea', 'vomiting', 'anxiety', 'fatigue'].includes(s))) {
+                disease = "Possible Heart Condition";
+                medicine = "Seek immediate medical attention.";
+                advice = "Visit a doctor as soon as possible.";
+            } 
+            // Check for brain stroke
+            else if (symptoms.some(s => ['pain in head', 'difficulty speaking', 'numbness', 
+                'weakness', 'confusion', 'severe headache'].includes(s))) {
+                disease = "Possible Brain Stroke";
+                medicine = "Seek immediate medical attention.";
+                advice = "Contact emergency services immediately.";
+            } 
+            // Check for high blood pressure or vertigo
+            else if (symptoms.some(s => ['dizziness', 'headache', 'blurred vision', 'nausea', 
+                'vomiting', 'confusion'].includes(s))) {
+                disease = "Possible High Blood Pressure or Vertigo";
+                medicine = "Monitor blood pressure and consult a doctor.";
+                advice = "If symptoms persist or worsen, seek medical advice.";
+            } 
+            // Check for urinary tract infection
+            else if (symptoms.some(s => ['dark yellow urine', 'smelly urine', 'blood in urine', 
+                'painful urination'].includes(s))) {
+                disease = "Urinary Tract Infection";
+                medicine = "Over-the-counter pain relief and consult a doctor.";
+                advice = "Increase fluid intake and see a doctor for appropriate antibiotics.";
+            } 
+            // Default advice if no matching symptoms
+            else {
+                advice = "Unable to determine a specific condition. If symptoms persist, seek medical advice.";
+            }
+
+            // Additional message if not enough symptoms are provided
+            const additionalAdvice = symptoms.length === 0 ? 
+                "<p>Please provide more symptoms to help identify potential conditions.</p>" : 
+                "";
+
+            // Display the result with blood pressure formatted as high/low
+            document.getElementById('result').innerHTML = `
+                <h3>Symptom Check Results</h3>
+                <p><strong>Possible Condition:</strong> ${disease}</p>
+                <p><strong>Suggested Medicine:</strong> ${medicine}</p>
+                <p><strong>Advice:</strong> ${advice}</p>
+                <p><strong>Blood Pressure Status:</strong> ${bloodPressureStatus} (${bloodPressureUpper}/${bloodPressureLower} mmHg)</p>
+                ${additionalAdvice}
+            `;
+        }
+    </script>
+</body>
+</html>

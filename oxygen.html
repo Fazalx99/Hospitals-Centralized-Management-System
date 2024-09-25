@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Oxygen Availability</title>
+  <link rel="stylesheet" href="oxygen.css">
+</head>
+<body>
+  <header>
+    <h1>Check Hospital Oxygen Availability</h1>
+  </header>
+
+  <main>
+    <section id="oxygen-checker">
+      <h2>Check Oxygen Availability</h2>
+      <form id="oxygen-form">
+        <label for="hospital-select">Select Hospital:</label>
+        <select id="hospital-select">
+          <option value="1">City General Hospital</option>
+          <option value="2">Metro Health Clinic</option>
+        </select>
+
+        <button type="button" onclick="checkOxygen()">Check Oxygen Availability</button>
+      </form>
+
+      <div id="oxygen-status">
+        <h3>Oxygen Availability</h3>
+        <p id="availability-result">Select a hospital to check oxygen availability.</p>
+      </div>
+    </section>
+
+    <section id="hospital-list">
+      <h2>Hospitals Oxygen Information</h2>
+
+      <div class="hospital" id="hospital1">
+        <h3>City General Hospital</h3>
+        <p>Oxygen Supply: <span id="oxygen1">Loading...</span></p>
+        <button class="update-btn" onclick="updateOxygen(1)">Update Oxygen Status</button>
+      </div>
+
+      <div class="hospital" id="hospital2">
+        <h3>Metro Health Clinic</h3>
+        <p>Oxygen Supply: <span id="oxygen2">Loading...</span></p>
+        <button class="update-btn" onclick="updateOxygen(2)">Update Oxygen Status</button>
+      </div>
+    </section>
+  </main>
+
+  
+
+  <script src="oxygen.js"></script>
+</body>
+</html>

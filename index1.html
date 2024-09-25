@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | MediCare</title>
+    <link rel="stylesheet" href="sihstyle.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            position: relative;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 1;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px; 
+            height: auto;
+        }
+
+        .company-name {
+            color: #fff;
+            font-size: 1.2em;
+            margin-left: 10px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 5px;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            color: #4CAF50;
+        }
+
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh; 
+            background: url("p18.jpg") no-repeat center center;
+            background-size: cover; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .slideshow-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .slides {
+            display: none;
+            padding: 20px;
+        }
+
+        .slides h1 {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+        }
+
+        .fade {
+            animation: fade 3s ease-in-out infinite;
+        }
+
+        @keyframes fade {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            60% { opacity: 1; }
+            80% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .fade:nth-of-type(1) { animation-delay: 0s; }
+        .fade:nth-of-type(2) { animation-delay: 3s; }
+        .fade:nth-of-type(3) { animation-delay: 6s; }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .intro {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center; 
+        }
+
+        .intro p {
+            font-size: 1.3em;
+            color: #333;
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .intro-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .intro h1 {
+            font-size: 2.5em;
+            color: black;
+            margin-top: 20px;
+            flex: 1;
+            text-align: center; 
+        }
+
+        section.features {
+            background-color: #fff;
+            padding: 30px;
+            width: 90%;
+            max-width: 1200px;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section.features h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .feature-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            flex: 1 1 22%;
+            margin: 10px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-item img.feature-icon {
+            width: 70px;
+            height: 70px;
+            margin-right: 20px;
+        }
+
+        .feature-description {
+            flex: 1;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .feature-item p {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        section.welcome {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        a.button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: inline-block;
+            margin: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        a.button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="p.jpg" alt="Gov of Delhi Logo" class="logo"> 
+                <span class="company-name">Government of Delhi | MediCare</span>
+            </div>
+            
+            <nav class="navbar">
+                <ul>
+                    <li><a href="appointment.html">Appointment</a></li>
+                    <li><a href="med.html">Medicines</a></li>
+                    <li><a href="hospital.html">Hospital</a></li>
+                    <li><a href="c.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="hero">
+            <div class="slideshow-container">
+                <div class="slides fade">
+                    <h1>Premium Membership</h1>
+                </div>
+                <div class="slides fade">
+                    <h1>Low Cost Care</h1>
+                </div>
+                <div class="slides fade">
+                    <h1>Hospitality</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="intro">
+            <h1>Welcome to MediCare</h1>
+        </div>
+        <div class="intro">
+            <p>"MediCare connects you with nearby hospitals and provides real-time availability of beds. Experience premium quality care with seamless admission and easily manage your appointment date and time."</p>
+            <div class="image-container">
+                <img src="rr.jpg" alt="MediCare Overview" class="intro-image"> 
+            </div>
+        </div>
+
+        <section class="features">
+            <h2>What MediCare Provides</h2>
+            <div class="feature-items">
+                <div class="feature-item">
+                    <img src="appo.png" alt="Book Appointment" class="feature-icon"> 
+                    <div class="feature-description">
+                        <p><a href="appointment.html" class="button">Book Appointment</a></p>
+                        <p>Schedule appointments with top healthcare providers effortlessly.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <img src="med.png" alt="Buy Medicine" class="feature-icon"> 
+                    <div class="feature-description">
+                        <p><a href="med.html" class="button">Buy Medicine</a></p>
+                        <p>Locate and purchase medicines from trusted pharmacies with ease.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <img src="health.jpg" alt="View Health Records" class="feature-icon"> 
+                    <div class="feature-description">
+                        <p><a href="health.html" class="button">Health Record</a></p>
+                        <p>Access and manage your health records securely online.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <img src="hos.webp" alt="Find Hospitals" class="feature-icon"> 
+                    <div class="feature-description">
+                        <p><a href="hospital.html" class="button">Hospitals</a></p>
+                        <p>Search for hospitals near you based on your needs and preferences.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <img src="p1.webp" alt="Bed Availability" class="feature-icon">
+                    <div class="feature-description">
+                        <p><a href="bed.html" class="button">Bed Availability</a></p>
+                        <p>Access and management of bed availability.</p>
+                    </div>
+                </div>   
+                <div class="feature-item">
+                    <img src="b.jpg" alt="Blood donation" class="feature-icon">
+                    <div class="feature-description">
+                        <p><a href="p.html" class="button">Blood donation booking</a></p>
+                        <p>Every Drop Counts</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <img src="o.webp" alt="Oxygen availability" class="feature-icon">
+                    <div class="feature-description">
+                        <p><a href="oxygen.html" class="button">Oxygen Availability</a></p>
+                        <p>Access and management of oxygen availability.</p>
+                    </div> 
+                </div>    
+                <div class="feature-item">
+                     <img src="s.jpg" alt="Symptom checker" class="feature-icon">
+                     <div class="feature-description">
+                         <p><a href="i.html" class="button">Symptom Checker</a></p>
+                         <p>To check your disease with the help of symptom checker</p>
+                    </div> 
+                </div>    
+                 <div class="feature-item">
+                     <img src="consult.jpeg" alt="Consult doctor" class="feature-icon">
+                     <div class="feature-description">
+                         <p><a href="doctor.html" class="button">Consult Doctor</a></p>
+                         <p>Consult your doctor anytime, anywhere</p>
+                     </div> 
+                 </div>     
+
+                </div>
+            </div>
+        </section>
+
+        <section class="welcome">
+            <h2>Your Health, Our Priority</h2>
+            <p>Find and manage your appointments with ease. Let us help you stay on top of your health.</p>
+            <a href="login.html" class="button">Log In</a>
+            <a href="account-creation.html" class="button">Create Account</a>
+        </section>
+    </main>
+   
+
+    <script>
+        let slideIndex = 0;
+
+        function showSlides() {
+            let slides = document.querySelectorAll('.slides');
+            slides.forEach((slide, index) => {
+                slide.style.display = 'none'; 
+            });
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1; }
+            slides[slideIndex - 1].style.display = 'block';  
+            setTimeout(showSlides, 3000); 
+        }
+
+        showSlides(); 
+    </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Appointment Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .form-group textarea {
+            resize: vertical;
+        }
+        .form-group input[type="file"] {
+            padding: 0;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .form-group .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-group .radio-group input {
+            margin-right: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #007BFF;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .result h3 {
+            margin-top: 0;
+            color: #007BFF;
+        }
+        .result p {
+            color: #333;
+        }
+        .result .status {
+            font-weight: bold;
+        }
+        .form-group .file-upload {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-group .file-upload span {
+            color: #ff0000;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Book Your Blood Donation Appointment</h2>
+        
+        <!-- Appointment Booking Form -->
+        <form id="appointmentForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Preferred Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Preferred Time:</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+            <div class="form-group">
+                <label for="hospital">Preferred Hospital:</label>
+                <select id="hospital" name="hospital" required>
+                    <option value="" disabled selected>Select a hospital</option>
+                    <option value="Max Healthcare">Max Healthcare</option>
+                    <option value="Fortis Healthcare">Fortis Healthcare</option>
+                    <option value="Apollo Hospitals">Apollo Hospitals</option>
+                    <option value="AIIMS">AIIMS</option>
+                    <option value="Medanta">Medanta</option>
+                    <option value="Safdarjung Hospital">Safdarjung Hospital</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Home Collection:</label>
+                <div class="radio-group">
+                    <input type="radio" id="homeYes" name="homeCollection" value="yes">
+                    <label for="homeYes">Yes</label>
+                    <input type="radio" id="homeNo" name="homeCollection" value="no" checked>
+                    <label for="homeNo">No</label>
+                </div>
+            </div>
+            <div id="certificateSection" class="form-group" style="display: none;">
+                <label for="certificate" class="file-upload">
+                    <input type="file" id="certificate" name="certificate" onchange="updateCertificateStatus()">
+                    <span id="certificateStatus">Certificate Not Uploaded</span>
+                </label>
+                <p id="certificateInstructions">If you selected home collection, please ensure you have the xerox copy ready to hand over to the ward boy.</p>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="bookAppointment()">Book Appointment</button>
+            </div>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // Show or hide certificate upload based on home collection selection
+        document.querySelectorAll('input[name="homeCollection"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const certificateSection = document.getElementById('certificateSection');
+                if (this.value === 'yes') {
+                    certificateSection.style.display = 'block';
+                } else {
+                    certificateSection.style.display = 'none';
+                    document.getElementById('certificate').value = ''; // Clear file input
+                    document.getElementById('certificateStatus').innerText = 'Certificate Not Uploaded';
+                }
+            });
+        });
+
+        // Update certificate upload status
+        function updateCertificateStatus() {
+            const certificateInput = document.getElementById('certificate');
+            const certificateStatus = document.getElementById('certificateStatus');
+            if (certificateInput.files.length > 0) {
+                certificateStatus.innerText = 'Certificate Uploaded';
+                certificateStatus.style.color = 'green';
+            } else {
+                certificateStatus.innerText = 'Certificate Not Uploaded';
+                certificateStatus.style.color = 'red';
+            }
+        }
+
+        // Book appointment function
+        function bookAppointment() {
+            const name = document.getElementById('name').value.trim();
+            const age = parseInt(document.getElementById('age').value.trim(), 10);
+            const address = document.getElementById('address').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const hospital = document.getElementById('hospital').value;
+            const homeCollection = document.querySelector('input[name="homeCollection"]:checked').value;
+            const certificateUploaded = document.getElementById('certificate').files.length > 0;
+
+            let resultMessage = `<h3>Appointment Booking Result</h3>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Age:</strong> ${age}</p>
+                <p><strong>Address:</strong> ${address}</p>
+                <p><strong>Phone Number:</strong> ${phone}</p>
+                <p><strong>Date:</strong> ${date}</p>
+                <p><strong>Time:</strong> ${time}</p>
+                <p><strong>Preferred Hospital:</strong> ${hospital}</p>`;
+
+            if (age > 80) {
+                resultMessage += `<p class="status">Appointment Failed: Sorry, individuals over 80 years old are not eligible to donate blood.</p>`;
+            } else {
+                if (homeCollection === 'yes') {
+                    if (certificateUploaded) {
+                        resultMessage += `
+                            <p><strong>Home Collection:</strong> Yes</p>
+                            <p><strong>Certificate:</strong> Certificate uploaded. Please ensure to bring a xerox copy to hand over to the ward boy.</p>
+                        `;
+                    } else {
+                        resultMessage += `
+                            <p><strong>Home Collection:</strong> Yes</p>
+                            <p><strong>Certificate:</strong> Certificate not uploaded. Please upload the certificate and ensure you have a xerox copy to hand over to the ward boy.</p>
+                            <p class="status">Appointment Failed: Please upload the certificate.</p>
+                        `;
+                    }
+                } else {
+                    resultMessage += `<p><strong>Home Collection:</strong> No</p>`;
+                }
+            }
+
+            document.getElementById('result').innerHTML = resultMessage;
+        }
+    </script>
+</body>
+</html>

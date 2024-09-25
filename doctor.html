@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Consultation</title>
+  <link rel="stylesheet" href="doctor.css">
+</head>
+<body>
+  <header>
+    <h1>Book a Doctor Consultation</h1>
+  </header>
+
+  <main>
+       <section id="consultation-checker">
+      <h2>Consult with a Doctor</h2>
+      <form id="consultation-form">
+        <label for="hospital-select-consult">Select Hospital:</label>
+        <select id="hospital-select-consult">
+          <option value="1">City General Hospital</option>
+          <option value="2">Metro Health Clinic</option>
+        </select>
+
+        <label for="department-select">Select Department:</label>
+        <select id="department-select">
+          <option value="cardiology">Cardiology</option>
+          <option value="neurology">Neurology</option>
+          <option value="orthopedics">Orthopedics</option>
+          <option value="pediatrics">Pediatrics</option>
+        </select>
+
+        <label for="date">Select Date:</label>
+        <input type="date" id="consultation-date" required>
+
+        <label for="timing-select">Select Timing:</label>
+        <select id="timing-select">
+          <option value="morning">Morning (9 AM - 12 PM)</option>
+          <option value="afternoon">Afternoon (12 PM - 4 PM)</option>
+          <option value="evening">Evening (4 PM - 8 PM)</option>
+        </select>
+
+        <button type="button" onclick="bookConsultation()">Book Consultation</button>
+      </form>
+
+      <div id="consultation-status">
+        <h3>Consultation Status</h3>
+        <p id="consultation-result">Select a hospital, department, date, and time to book a consultation.</p>
+      </div>
+    </section>
+  </main>
+
+  
+
+  <script src="doctor.js"></script>
+</body>
+</html>

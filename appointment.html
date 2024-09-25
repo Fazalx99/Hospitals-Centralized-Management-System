@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Appointment Booking</title>
+    <style>
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background: url("p21.jpg") no-repeat center center fixed; 
+            background-size: cover;
+            padding: 20px;
+        }
+
+        .container1 {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container2 {
+             background-color: white;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #4cae4c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container1">
+        <h2>Book an Appointment</h2>
+        <form id="appointmentForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="department">Select Department:</label>
+            <select id="department" name="department" required>
+                <option value="">-- Select Department --</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Neurology">Neurology</option>
+                <option value="Orthopedics">Orthopedics</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="Gynecology">Gynecology</option>
+                <option value="Oncology">Oncology</option>
+                <option value="General Medicine">General Medicine</option>
+            </select>
+
+            <label for="doctor">Choose Doctor:</label>
+            <select id="doctor" name="doctor" required>
+                <option value="">-- Select Doctor --</option>
+                <option value="Dr. Shetty">Dr. Devi Prasad Shetty</option>
+                <option value="Dr. Prasad">Dr. Rajendra Prasad</option>
+                <option value="Dr. Reddy">Dr. Sangeeta Reddy</option>
+                <option value="Dr. Hinduja">Dr. Indira Hinduja</option>
+                <option value="Dr. Arora">Dr. Priti Arora</option>
+                <option value="Dr. Venugopal">Dr. Pallav Venugopal</option>
+            </select>
+
+            <label for="date">Preferred Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Preferred Time:</label>
+            <input type="time" id="time" name="time" required>
+
+            <label for="notes">Symptoms:</label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+    </div>
+    <div class="container2">
+        <h2>Appointment Queue</h2>
+            <table id="appointmentTable">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Department</th>
+                        <th>Doctor</th>
+                        <th>Preferred Date</th>
+                        <th>Preferred Time</th>
+                        <th>Symptoms</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Appointment rows will be shown here -->
+                </tbody>
+            </table>
+    </div>
+    <!-- Firebase SDK -->
+    <script type="module" src="appointment.js"></script>
+</body>
+
+</html>

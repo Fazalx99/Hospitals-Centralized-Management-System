@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Bed Availability</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url("p19.jpg") no-repeat center center fixed; 
+            background-size: cover;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .results {
+            margin-top: 20px;
+        }
+
+        .results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .results th, .results td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .results th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .results tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Check Bed Availability</h2>
+        <form id="availabilityForm">
+            <label for="hospital">Select Hospital:</label>
+            <select id="hospital" name="hospital" required>
+                <option value="">-- Select Hospital --</option>
+                <option value="utkal">Utkal Hospital</option>
+                <option value="kalinga">Kalinga Hospital</option>
+                <option value="care">Care Hospital</option>
+                <option value="apollo">Apollo Hospital</option>
+                <option value="vivekananda">Vivekananda Hospital</option>
+                <option value="sparsh">Sparsh Hospital</option>
+            </select>
+
+            <label for="date">Preferred Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Preferred Time:</label>
+            <input type="time" id="time" name="time" required>
+
+            <label for="bed">Select Bed Type:</label>
+            <select id="bed" name="bed" required>
+                <option value="">-- Select Bed Type --</option>
+                <option value="icu">ICU</option>
+                <option value="general">General</option>
+                <option value="premium">Premium</option>
+            </select>
+
+            <button type="submit">Check Availability</button>
+        </form>
+
+        <div class="results hidden" id="results">
+            <h3>Availability Results</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hospital</th>
+                        <th>Bed Type</th>
+                        <th>Available Beds</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTableBody">
+                    <!-- Results will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('availabilityForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form data
+            const hospital = document.getElementById('hospital').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const bedType = document.getElementById('bed').value;
+
+            // Dummy data for availability
+            const availability = {
+                utkal: { icu: 10, general: 30, premium: 5 },
+                kalinga: { icu: 15, general: 25, premium: 8 },
+                care: { icu: 8, general: 20, premium: 12 },
+                apollo: { icu: 12, general: 22, premium: 6 },
+                vivekananda: { icu: 9, general: 18, premium: 10 },
+                sparsh: { icu: 14, general: 28, premium: 7 }
+            };
+
+            // Check availability
+            const hospitalData = availability[hospital];
+            if (!hospitalData) {
+                alert('Please select a valid hospital.');
+                return;
+            }
+
+            let bedTypeLabel;
+            let availableBeds;
+
+            switch (bedType) {
+                case 'icu':
+                    bedTypeLabel = 'ICU Beds';
+                    availableBeds = hospitalData.icu;
+                    break;
+                case 'general':
+                    bedTypeLabel = 'General Beds';
+                    availableBeds = hospitalData.general;
+                    break;
+                case 'premium':
+                    bedTypeLabel = 'Premium Beds';
+                    availableBeds = hospitalData.premium;
+                    break;
+                default:
+                    bedTypeLabel = 'Unknown Bed Type';
+                    availableBeds = 'N/A';
+                    break;
+            }
+
+            // Display results
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('resultsTableBody').innerHTML = `
+                <tr>
+                    <td>${hospital.charAt(0).toUpperCase() + hospital.slice(1)}</td>
+                    <td>${bedTypeLabel}</td>
+                    <td>${availableBeds}</td>
+                </tr>
+            `;
+        });
+    </script>
+</body>
+</html>
